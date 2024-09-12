@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Facture;
+use App\Models\Payement;
+use App\Observers\FactureObserver;
+use App\Observers\PayementObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,12 +29,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Facture::observe(FactureObserver::class);
+        Payement::observe(PayementObserver::class);
     }
 
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     */
     public function shouldDiscoverEvents(): bool
     {
         return false;
