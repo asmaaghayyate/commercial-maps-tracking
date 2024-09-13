@@ -57,10 +57,14 @@ class CommandController extends Controller
 
         $latestDetail = CommandDetail::where('command_id', $command->id)->latest()->first();
 
+        $destinationArray = json_decode($command->destination, true);
+        $latestLocation = json_decode($latestDetail->current_location, true);
 
         return view('admin.content.command.show', [
             'command' => $command,
-            'latestDetail' => $latestDetail
+            'destinationArray' => $destinationArray,
+            'latestLocation' => $latestLocation,
+
         ]);
     }
 

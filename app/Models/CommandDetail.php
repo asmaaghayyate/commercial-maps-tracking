@@ -10,7 +10,8 @@ class CommandDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        "current_location"
+        "current_location",
+        "command_id"
     ];
 
     protected $casts = [
