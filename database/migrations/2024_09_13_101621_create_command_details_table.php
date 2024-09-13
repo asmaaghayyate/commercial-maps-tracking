@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('command_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('command_id')->nullable()->constrained('commands')->onDelete('cascade');
             $table->json('current_location');
             $table->timestamps();
         });

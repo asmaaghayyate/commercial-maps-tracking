@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class CommandDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "current_location"
+    ];
+
+    protected $casts = [
+        'current_location' => 'array',
+    ];
+
+    public function command()
+    {
+        return $this->belongsTo(Command::class);
+    }
 }

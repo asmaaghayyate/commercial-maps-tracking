@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Command;
+use App\Models\CommandDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,7 +54,14 @@ class CommandController extends Controller
     public function show(Command $command)
     {
         $command->load(['commercial.user', 'admin', 'client.user']);
-        return view('admin.content.command.show', ['command' => $command]);
+
+        $latestDetail = CommandDetail::where('command_id', $command->id)->latest()->first();
+
+
+        return view('admin.content.command.show', [
+            'command' => $command,
+            'latestDetail' => $latestDetail
+        ]);
     }
 
 

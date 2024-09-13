@@ -22,6 +22,15 @@ class Command extends Model
         'destination' => 'array', // Automatically cast JSON column to array
     ];
 
+    // In Command model
+
+    // In Command model
+    public function latestDetail()
+    {
+        return $this->hasMany(CommandDetail::class)->latest()->first();
+    }
+
+
     /**
      * Get the client associated with the command detail.
      */

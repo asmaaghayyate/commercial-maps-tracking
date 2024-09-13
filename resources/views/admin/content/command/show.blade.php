@@ -118,43 +118,94 @@
                     </div>
                     <div class="tab-content border-left border-bottom border-right border-top-0 p-4">
                         <div class="tab-pane active" id="home">
+
                             <!-- Leaflet CSS -->
                             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
                             <!-- Leaflet JS -->
                             <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                            <!-- Leaflet Routing Machine -->
+                            <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+                            <!-- Leaflet Routing Machine CSS -->
+                            <link rel="stylesheet"
+                                href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
                             <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
 
                             <script>
-                                let map, marker;
+                                let map, destinationMarker, currentLocationMarker, routeControl;
 
                                 // Pass PHP variables to JavaScript
-                                const latitude = @json($command->destination['latitude']);
-                                const longitude = @json($command->destination['longitude']);
+                                const details = @json(
+                                    $latestDetail
+                                        ? [
+                                            'latitude' => $latestDetail->current_location['longitude'],
+                                            'longitude' => $latestDetail->current_location['latitude'],
+                                        ]
+                                        : []
+                                );
 
-                                function initMap(lat = longitude, lng = latitude) {
+                                const destination = @json(
+                                    $command->destination
+                                        ? [
+                                            'latitude' => $command->destination['longitude'],
+                                            'longitude' => $command->destination['latitude'],
+                                        ]
+                                        : []
+                                );
+
+                                function initMap() {
                                     if (map) {
                                         map.remove();
                                     }
 
-                                    map = L.map('map').setView([lat, lng], 13);
 
-                                    // Add a tile layer (Map tiles from OpenStreetMap)
+                                    map = L.map('map').setView([details.latitude, details.longitude], 13);
+
                                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     }).addTo(map);
 
-                                    // Add a marker
-                                    marker = L.marker([lat, lng], {
+                                    // Add destination marker with a specific icon
+                                    destinationMarker = L.marker([destination.latitude, destination.longitude], {
+                                        icon: L.icon({
+                                            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', // Replace with your destination icon URL
+                                            iconSize: [25, 41],
+                                            iconAnchor: [12, 41]
+                                        }),
                                         draggable: false
                                     }).addTo(map);
+
+                                    // Add current location marker with a different icon
+                                    currentLocationMarker = L.marker([details.latitude, details.longitude], {
+                                        icon: L.icon({
+                                            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png', // Replace with your current location icon URL
+                                            iconSize: [25, 41],
+                                            iconAnchor: [12, 41]
+                                        }),
+                                        draggable: false
+                                    }).addTo(map);
+
+                                    // Add a route between the two markers
+                                    if (destination.latitude && details.latitude) {
+                                        routeControl = L.Routing.control({
+                                            waypoints: [
+                                                L.latLng(details.latitude, details.longitude),
+                                                L.latLng(destination.latitude, destination.longitude)
+                                            ],
+                                            routeWhileDragging: true,
+                                            createMarker: function() {
+                                                return null;
+                                            }
+                                        }).addTo(map);
+                                    }
                                 }
 
-                                // Initialize map with default coordinates
+
                                 document.addEventListener('DOMContentLoaded', function() {
                                     initMap();
                                 });
                             </script>
+
 
                         </div>
                         <div class="tab-pane" id="profile">
