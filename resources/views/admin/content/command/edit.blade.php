@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('admin.client.update' , $client) }}" method="POST">
+                <form action="{{ route('admin.command.update' , $client) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row row-sm">

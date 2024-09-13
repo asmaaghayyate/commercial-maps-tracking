@@ -86,6 +86,11 @@ class CommandController extends Controller
      */
     public function destroy(Command $command)
     {
-        //
+
+        if ($command) {
+            $command->delete();
+        }
+        return redirect()->route('admin.command.index')
+            ->with('success', 'commande deleted successfully.');
     }
 }

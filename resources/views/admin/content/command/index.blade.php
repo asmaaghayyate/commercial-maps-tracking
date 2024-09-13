@@ -13,7 +13,7 @@
         </div>
         <div class="d-flex my-xl-auto right-content">
             <div class="pr-1 mb-3 mb-xl-0">
-                <a href="{{ route('admin.command.create') }}" title="Create New Client" type="button"
+                <a href="{{ route('admin.command.create') }}" title="Create New Commande" type="button"
                     class="btn btn-info btn-sm">
                     <i class="fa-solid fa-plus"></i>
                 </a>
@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @php
-                            $columns = ['Clinent', 'Admin', 'Commercial', 'destination name', 'Action'];
+                            $columns = ['Client', 'Admin', 'Commercial', 'destination name', 'Action'];
                         @endphp
                         <table class="table table-hover mb-0 text-md-nowrap">
                             <thead>
@@ -56,7 +56,7 @@
                                                 style="margin-right: 5px"><i class="fa-solid fa-eye "></i></a>
 
                                             <form id="delete-user-form-{{ $item->id }}"
-                                                action="{{ route('admin.client.destroy', $item) }}" method="POST"
+                                                action="{{ route('admin.command.destroy', $item) }}" method="POST"
                                                 style="display: none;">
                                                 @csrf
                                                 @method('delete')
