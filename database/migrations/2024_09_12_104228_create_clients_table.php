@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignIdFor(User::class);
+            $table->string('adresse');
+            $table->foreignId('user_id')->unsigned();
+            $table->foreign('user_id')->references("id")->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

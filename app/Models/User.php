@@ -25,7 +25,9 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone',
-        'role'
+        'role',
+        'client_id',
+        'commercial_id',
     ];
 
     /**
@@ -62,4 +64,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
+public function client(){
+    return $this->belongsTo(Client::class);
+}
+
+public function commercial(){
+    return $this->belongsTo(Commercial::class);
+}
+
+
+
 }

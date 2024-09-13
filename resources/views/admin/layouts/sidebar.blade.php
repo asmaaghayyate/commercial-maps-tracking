@@ -47,7 +47,7 @@
                         class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ route('admin.commercial.index') }}">Commercial</a></li>
-                    <li><a class="slide-item" href="">Clients</a>
+                    <li><a class="slide-item" href="{{ route('admin.client.index') }}">Clients</a>
                     </li>
                     <li><a class="slide-item" href="">Admins</a>
                     </li>

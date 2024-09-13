@@ -16,9 +16,9 @@ return new class extends Migration
     {
         Schema::create('commands', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Admin::class);
             $table->foreignIdFor(Client::class);
             $table->foreignIdFor(Commercial::class);
+            $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->json('destination');
             $table->string('destination_name');
             $table->string('status');

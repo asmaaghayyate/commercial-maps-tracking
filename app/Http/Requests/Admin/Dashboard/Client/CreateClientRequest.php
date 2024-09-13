@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Dashboard;
+namespace App\Http\Requests\Admin\Dashboard\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCommercialRequest extends FormRequest
+class CreateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,14 +26,7 @@ class CreateCommercialRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:5',
             'role' => 'required|string|in:admin,client,commercial',
-            'genre' => 'required|string|max:255',
-            'type_deplacement' => 'required|string|max:255',
-            'identite' => 'required|string|max:255',
-            'adresse' => 'required|string|max:1000',
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
-            'type_contrat' => 'required|string|max:255',
-            'departement_id' => 'required|exists:departements,id',
+            'adresse' => 'required|string|max:255',
         ];
     }
 }
