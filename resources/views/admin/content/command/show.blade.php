@@ -136,19 +136,19 @@
 
                                 // Pass PHP variables to JavaScript
                                 const details = @json(
-                                    $latestDetail
+                                    $latestLocation
                                         ? [
-                                            'latitude' => $latestDetail->current_location['longitude'],
-                                            'longitude' => $latestDetail->current_location['latitude'],
+                                            'latitude' => $latestLocation['longitude'],
+                                            'longitude' => $latestLocation['latitude'],
                                         ]
                                         : []
                                 );
 
                                 const destination = @json(
-                                    $command->destination
+                                    $destinationArray
                                         ? [
-                                            'latitude' => $command->destination['longitude'],
-                                            'longitude' => $command->destination['latitude'],
+                                            'latitude' => $destinationArray['longitude'],
+                                            'longitude' => $destinationArray['latitude'],
                                         ]
                                         : []
                                 );

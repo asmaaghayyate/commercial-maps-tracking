@@ -19,7 +19,7 @@ class Command extends Model
     ];
 
     protected $casts = [
-        'destination' => 'array', // Automatically cast JSON column to array
+        'destination' => 'array',
     ];
 
     // In Command model
