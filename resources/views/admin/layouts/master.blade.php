@@ -113,10 +113,12 @@
                                     </div>
                                     <a class="dropdown-item" href=""><i
                                             class="bx bx-user-circle"></i>Profile</a>
-                                    <form action="" method="post">
+                                    <form action="{{ route('logout') }}" method="post">
                                         @csrf
-                                        <button class="dropdown-item"><i class="bx bx-log-out"></i>
+                                        
+                                        <button class="dropdown-item" ><i class="bx bx-log-out" ></i>
                                             Sign Out</button>
+                                
                                     </form>
                                 </div>
                             </div>

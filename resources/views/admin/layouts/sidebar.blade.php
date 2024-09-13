@@ -40,6 +40,7 @@
             </li>
 
             <li class="side-item side-item-category">General</li>
+            
             <li class="slide">
                 <a class="side-menu__item" data-toggle="slide" href="#"><i class="fa-solid fa-user-tie"
                         style="color: #000000;"></i><span class="side-menu__label"
@@ -54,10 +55,13 @@
                 </ul>
             </li>
             <li class="slide">
-                <a class="side-menu__item" href="#"><i class="fa-solid fa-gears" style="color: #000000;"></i><span
+                <a class="side-menu__item" href="{{ route('admin.departement.index') }}"><i class="fa-solid fa-gears" style="color: #000000;"></i><span
                         style="margin-left: 14px;font-weight: bold;color: black"
-                        class="side-menu__label">Profie</span></a>
+                        class="side-menu__label">Departements</span></a>
+                
             </li>
+           
+
         </ul>
     </div>
 </aside>

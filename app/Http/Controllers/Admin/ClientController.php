@@ -108,6 +108,6 @@ return view('admin.content.client.edit', compact('client'));
 
 
         return redirect()->route('admin.client.index')
-            ->with('success', 'client and User updated successfully.');
+            ->with('success', 'client and User deleted successfully.');
     }
 }

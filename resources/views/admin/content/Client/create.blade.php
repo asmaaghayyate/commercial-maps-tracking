@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="main-content-label mg-b-5">
-                    Create A Commercial
+                    Create A Client
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

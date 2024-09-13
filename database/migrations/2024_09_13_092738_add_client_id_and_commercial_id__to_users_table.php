@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('commercial_id')->unsigned()->nullable();
             $table->foreign('commercial_id')->references("id")->on('commercials')->onDelete('cascade');
           
-
         });
     }
 

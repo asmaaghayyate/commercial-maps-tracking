@@ -104,6 +104,6 @@ class CommercialController extends Controller
             $commercial->delete();
         }
         return redirect()->route('admin.commercial.index')
-            ->with('success', 'Commercial and User updated successfully.');
+            ->with('success', 'Commercial and User deleted successfully.');
     }
 }

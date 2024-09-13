@@ -1,19 +1,19 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Client')
+@section('title', 'Departement')
 
 @section('content')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Client</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto">Departement</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/
                     List</span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
             <div class="pr-1 mb-3 mb-xl-0">
-                <a href="{{ route('admin.client.create') }}" title="Create New Client" type="button"
+                <a href="{{ route('admin.departement.create') }}" title="Create New Departement" type="button"
                     class="btn btn-info btn-sm">
                     <i class="fa-solid fa-plus"></i>
                 </a>
@@ -31,8 +31,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @php
-                            $columns = ['Name', 'Email', 
-                          'Adresse', 'Action'];
+                            $columns = ['Name' ,'Action'];
                         @endphp
                         <table class="table table-hover mb-0 text-md-nowrap">
                             <thead>
@@ -45,18 +44,17 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->adresse }}</td>
+                                        <td>{{ $item->name }}</td>
+                                    
                                       
 
                                         <td class="d-flex">
-                                            <a href="{{ route('admin.client.edit', $item) }}"
+                                            <a href="{{ route('admin.departement.edit', $item) }}"
                                                 class="btn btn-warning btn-sm" style="margin-right: 5px"><i
                                                     class="fa-solid fa-pen "></i></a>
 
                                             <form id="delete-user-form-{{ $item->id }}"
-                                                action="{{ route('admin.client.destroy', $item) }}" method="POST"
+                                                action="{{ route('admin.departement.destroy', $item) }}" method="POST"
                                                 style="display: none;">
                                                 @csrf
                                                 @method('delete')
