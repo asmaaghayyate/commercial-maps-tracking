@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             
             $table->foreignId('client_id')->unsigned()->nullable();
-            $table->foreign('client_id')->references("id")->on('users')->onDelete('cascade');
+            $table->foreign('client_id')->references("id")->on('clients')->onDelete('cascade');
           
             $table->foreignId('commercial_id')->unsigned()->nullable();
-            $table->foreign('commercial_id')->references("id")->on('users')->onDelete('cascade');
+            $table->foreign('commercial_id')->references("id")->on('commercials')->onDelete('cascade');
           
 
         });
