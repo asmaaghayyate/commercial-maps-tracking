@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
+
 class CommercialController extends Controller
 {
     /**
@@ -49,6 +51,8 @@ class CommercialController extends Controller
             ['user_id' => $user->id]
         ));
 
+        Cache::forget('commercial_list');
+
         return redirect()->route('admin.commercial.index')
             ->with('success', 'Commercial and User created successfully.');
     }
@@ -77,7 +81,10 @@ class CommercialController extends Controller
     {
         $user = User::findOrFail($commercial->user_id);
         $this->validate($request, [
-            'email' => ['required','email', Rule::unique('users', 'email')->ignore($user->id),
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($user->id),
             ],
         ]);
 
@@ -90,6 +97,7 @@ class CommercialController extends Controller
 
         // Update Commercial
         $commercial->update($request->except(['name', 'email', 'password', 'role', 'phone']));
+        Cache::forget('commercial_list');
 
         return redirect()->route('admin.commercial.index')
             ->with('success', 'Commercial and User updated successfully.');
@@ -102,6 +110,7 @@ class CommercialController extends Controller
     {
         if ($commercial) {
             $commercial->delete();
+            Cache::forget('commercial_list');
         }
         return redirect()->route('admin.commercial.index')
             ->with('success', 'Commercial and User deleted successfully.');
