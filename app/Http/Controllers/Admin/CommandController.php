@@ -7,6 +7,7 @@ use App\Models\Command;
 use App\Models\CommandDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CommandController extends Controller
 {
@@ -15,7 +16,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $data = Command::with(['commercial', 'admin', 'client'])->paginate(10);
+        $data = Command::with(['commercial', 'admin', 'client'])->latest()->paginate(10);
         return view('admin.content.command.index', compact('data'));
     }
 
@@ -24,7 +25,8 @@ class CommandController extends Controller
      */
     public function create()
     {
-        return view('admin.content.command.create');
+        $commercials = Cache::get('commercial_list');
+        return view('admin.content.command.create', compact('commercials'));
     }
 
     /**
@@ -41,6 +43,7 @@ class CommandController extends Controller
             'destination' => $data,
             'admin_id' => Auth::user()->id,
             'destination_name' => $request->destination_name,
+            "commercial_id" => $request->commercial_id
         ]);
 
         return redirect()->route('admin.command.index')->with([

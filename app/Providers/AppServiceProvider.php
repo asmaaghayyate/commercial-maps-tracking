@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Commercial;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->share('commercial_list', value: Cache::rememberForever('commercial_list', function () {
+            return Commercial::all();
+        }));
     }
 }

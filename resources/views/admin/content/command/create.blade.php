@@ -141,6 +141,23 @@
                                 initMap();
                             });
                         </script>
+                        <div class="col-6">
+                            <div class="form-group mg-b-0">
+                                <label class="form-label">Commercial : </label>
+                                <select name="commercial_id" class="form-control SlectBox SumoUnder">
+                                    <option value="" disabled selected>Select Commercial</option>
+                                    @forelse ($commercials as $item)
+                                        <option {{ old('commercial_id') == $item->id ? 'selected' : '' }}
+                                            value="{{ $item->id }}">{{ $item->user->name }}
+                                        </option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @error('commercial_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="col-12">
                             <button class="btn btn-main-primary pd-x-20 mg-t-10" type="submit">
