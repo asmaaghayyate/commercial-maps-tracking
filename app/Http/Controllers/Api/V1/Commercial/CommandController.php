@@ -14,17 +14,6 @@ class CommandController extends Controller
         // return response()->json(auth()->user());
         $commands = Command::where('commercial_id', auth()->user()->commercial->id)->with(['client'])->get();
         return response()->json($commands, 200);
-    
-        // $userId=auth()->id();
-        // $commands = Command::whereHas(
-        //     'commercial', function ($query) use ($userId) {
-        //     $query->where('user_id', $userId);
-        // })->with('commercial')->with(['client'])->get(); // Charger la relation commercial
-          
-    
-        // return response()->json($commands, 200);
-
-    // 
     }
 
 
