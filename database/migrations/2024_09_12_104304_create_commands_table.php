@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(Client::class)->onDelete('cascade')->nullable();
             $table->foreignIdFor(Commercial::class)->onDelete('cascade')->nullable();
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->enum('etat', ['initial', 'en cours', 'final'])->default('initial');
+
             $table->json('destination');
             $table->string('destination_name')->nullable();
             $table->string('status')->nullable();
