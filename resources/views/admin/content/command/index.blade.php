@@ -48,11 +48,10 @@
                                         <td>{{ $item->admin?->name }}</td>
                                         <td>{{ $item->commercial?->user->name }}</td>
                                         <td>{{ Str::limit($item->destination_name, 25, '...')  }}</td>
-
-                        <td style="background-color: {{ \App\Enums\EtatEnum::getColor($item->etat) }}; font-weight: bold;">
+                                        <td style="background-color: {{ \App\Enums\EtatEnum::getColor($item->etat) }}; font-weight: bold;">
                                             {{ $item->etat }}
                                         </td>
-                                        
+
 
                                         <td class="d-flex">
                                             <a href="{{ route('admin.command.edit', $item) }}" class="btn btn-info btn-sm"
@@ -89,7 +88,7 @@
                                             </script>
                                         </td>
 
-                                       
+
 
                                     </tr>
                                 @endforeach

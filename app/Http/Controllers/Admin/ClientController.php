@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+
 class ClientController extends Controller
 {
     /**
@@ -26,7 +27,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.content.client.create');
     }
     /**
@@ -35,21 +36,21 @@ class ClientController extends Controller
     public function store(CreateClientRequest $request)
     {
         // Inside your controller or service
-$user = User::create([
-    'name' => $request->name,
-    'email' => $request->email,
-    'password' => Hash::make($request->password),
-    'role' => $request->role,
-]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
 
-$client = $user->client()->create(array_merge(
-    $request->except(['email', 'password', 'role']),
-    ['user_id' => $user->id]
-));
+        $client = $user->client()->create(array_merge(
+            $request->except(['email', 'password', 'role']),
+            ['user_id' => $user->id]
+        ));
 
-$user->update(['client_id' => $client->id]);
+        $user->update(['client_id' => $client->id]);
 
-Cache::forget(key: 'client_list');
+        Cache::forget(key: 'client_list');
         return redirect()->route('admin.client.index')
             ->with('success', 'Client and User created successfully.');
     }
@@ -68,7 +69,7 @@ Cache::forget(key: 'client_list');
      */
     public function edit(Client $client)
     {
-return view('admin.content.client.edit', compact('client'));
+        return view('admin.content.client.edit', compact('client'));
     }
 
     /**
@@ -76,10 +77,13 @@ return view('admin.content.client.edit', compact('client'));
      */
     public function update(Request $request, Client $client)
     {
-        
+
         $user = User::findOrFail($client->user_id);
         $this->validate($request, [
-            'email' => ['required','email', Rule::unique('users', 'email')->ignore($user->id),
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($user->id),
             ],
         ]);
 
@@ -95,7 +99,6 @@ return view('admin.content.client.edit', compact('client'));
 
         return redirect()->route('admin.client.index')
             ->with('success', 'Client and User updated successfully.');
-
     }
 
     /**
@@ -105,7 +108,7 @@ return view('admin.content.client.edit', compact('client'));
     {
         if ($client) {
             $client->delete();
-           // $client->user()->delete();
+            // $client->user()->delete();
         }
 
 
