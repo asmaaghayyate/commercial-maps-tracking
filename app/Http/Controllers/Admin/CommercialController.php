@@ -46,10 +46,12 @@ class CommercialController extends Controller
             'phone' => $request->phone,
         ]);
 
-        Commercial::create(array_merge(
+        $commercial =   Commercial::create(array_merge(
             $request->except(['name', 'email', 'password', 'role']),
             ['user_id' => $user->id]
         ));
+
+        $user->update(attributes: ['commercial_id' => $commercial->id]);
 
         Cache::forget('commercial_list');
 

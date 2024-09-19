@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\Admin\CreateCommandEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Command;
 use App\Models\CommandDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -27,9 +29,7 @@ class CommandController extends Controller
     {
         $commercials = Cache::get('commercial_list');
         $clients = Cache::get('client_list');
-
-       // dd($clients);
- return view('admin.content.command.create', compact('commercials','clients'));
+        return view('admin.content.command.create', compact('commercials', 'clients'));
     }
 
     /**
@@ -48,8 +48,9 @@ class CommandController extends Controller
             'destination_name' => $request->destination_name,
             "commercial_id" => $request->commercial_id,
             "client_id" => $request->client_id
-            
         ]);
+
+        event(new CreateCommandEvent(message: 'You Have New Command', user: User::where('commercial_id', $request->commercial_id)->first()));
 
         return redirect()->route('admin.command.index')->with([
             "success" => "data create with success"

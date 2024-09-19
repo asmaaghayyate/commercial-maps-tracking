@@ -28,7 +28,6 @@ class CreateCommandEvent implements ShouldBroadcast
     {
         $channel = 'user.' . $this->user->id;
 
-        // Log the channel being broadcasted to
         Log::info("Broadcasting to channel: " . $channel);
 
         return [$channel];
