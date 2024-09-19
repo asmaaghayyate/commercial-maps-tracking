@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @php
-                            $columns = ['Client', 'Admin', 'Commercial', 'destination name', 'Action'];
+                            $columns = ['Client', 'Admin', 'Commercial', 'destination name','Etat', 'Action'];
                         @endphp
                         <table class="table table-hover mb-0 text-md-nowrap">
                             <thead>
@@ -48,6 +48,12 @@
                                         <td>{{ $item->admin?->name }}</td>
                                         <td>{{ $item->commercial?->user->name }}</td>
                                         <td>{{ Str::limit($item->destination_name, 25, '...')  }}</td>
+
+                        <td style="background-color: {{ \App\Enums\EtatEnum::getColor($item->etat) }}; font-weight: bold;">
+                                            {{ $item->etat }}
+                                        </td>
+                                        
+
                                         <td class="d-flex">
                                             <a href="{{ route('admin.command.edit', $item) }}" class="btn btn-info btn-sm"
                                                 style="margin-right: 5px"><i class="fa-solid fa-pen "></i></a>
@@ -82,6 +88,9 @@
                                                 }
                                             </script>
                                         </td>
+
+                                       
+
                                     </tr>
                                 @endforeach
                             </tbody>

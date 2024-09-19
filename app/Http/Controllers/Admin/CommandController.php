@@ -16,7 +16,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $data = Command::with(['commercial', 'admin', 'client'])->latest()->paginate(10);
+        $data = Command::with(relations: ['commercial', 'admin', 'client'])->latest()->paginate(10);
         return view('admin.content.command.index', compact('data'));
     }
 
@@ -26,7 +26,10 @@ class CommandController extends Controller
     public function create()
     {
         $commercials = Cache::get('commercial_list');
-        return view('admin.content.command.create', compact('commercials'));
+        $clients = Cache::get('client_list');
+
+       // dd($clients);
+ return view('admin.content.command.create', compact('commercials','clients'));
     }
 
     /**
@@ -43,7 +46,9 @@ class CommandController extends Controller
             'destination' => $data,
             'admin_id' => Auth::user()->id,
             'destination_name' => $request->destination_name,
-            "commercial_id" => $request->commercial_id
+            "commercial_id" => $request->commercial_id,
+            "client_id" => $request->client_id
+            
         ]);
 
         return redirect()->route('admin.command.index')->with([

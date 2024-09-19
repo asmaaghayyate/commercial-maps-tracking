@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Dashboard\Client\CreateClientRequest;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 class ClientController extends Controller
@@ -48,7 +49,7 @@ $client = $user->client()->create(array_merge(
 
 $user->update(['client_id' => $client->id]);
 
-
+Cache::forget(key: 'client_list');
         return redirect()->route('admin.client.index')
             ->with('success', 'Client and User created successfully.');
     }
@@ -90,6 +91,7 @@ return view('admin.content.client.edit', compact('client'));
 
         // Update Commercial
         $client->update($request->except(['name', 'email', 'password', 'role']));
+        Cache::forget(key: 'client_list');
 
         return redirect()->route('admin.client.index')
             ->with('success', 'Client and User updated successfully.');

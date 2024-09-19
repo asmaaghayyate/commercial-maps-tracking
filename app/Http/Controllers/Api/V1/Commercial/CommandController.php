@@ -11,15 +11,28 @@ class CommandController extends Controller
 {
     public function MyCommands()
     {
-        $commands = Command::where('commercial_id', auth()->id())->with(['client'])->get();
+        // return response()->json(auth()->user());
+        $commands = Command::where('commercial_id', auth()->user()->commercial->id)->with(['client'])->get();
         return response()->json($commands, 200);
+    
+        // $userId=auth()->id();
+        // $commands = Command::whereHas(
+        //     'commercial', function ($query) use ($userId) {
+        //     $query->where('user_id', $userId);
+        // })->with('commercial')->with(['client'])->get(); // Charger la relation commercial
+          
+    
+        // return response()->json($commands, 200);
+
+    // 
     }
+
 
     public function TakCommand(Command $command)
     {
         if (!$command->commercial_id) {
             $command->update([
-                "commercial_id" => auth()->id()
+                "commercial_id" =>auth()->user()->commercial->id
             ]);
             return response()->json([
                 "message" => "Commande prise en charge avec succès."

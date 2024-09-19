@@ -1,6 +1,7 @@
 
 <?php
 
+use App\Http\Controllers\Api\Auth\ClientAuth;
 use App\Http\Controllers\Api\Auth\CommercialAuth;
 use App\Http\Controllers\Api\V1\Commercial\CommandController;
 use App\Http\Controllers\Api\V1\YourController;
@@ -12,8 +13,11 @@ Route::prefix('v1')->group(function () {
     Route::controller(CommercialAuth::class)->group(function() {
         Route::post('login' , 'login');
     });
-
     //
+    Route::controller(ClientAuth::class)->group(function() {
+        Route::post('login' , 'login');
+    });
+
     Route::middleware(['auth:api','commercialAuth'])->group(function () {
         Route::controller(CommandController::class)->group(function () {
             Route::get('MyCommands' , "MyCommands");
@@ -22,3 +26,7 @@ Route::prefix('v1')->group(function () {
         });
     });
 });
+
+
+
+
