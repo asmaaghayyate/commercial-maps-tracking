@@ -47,7 +47,7 @@ $client = $user->client()->create(array_merge(
     ['user_id' => $user->id]
 ));
 
-$user->update(['client_id' => $client->id]);
+$user->update(attributes: ['client_id' => $client->id]);
 
 Cache::forget(key: 'client_list');
         return redirect()->route('admin.client.index')

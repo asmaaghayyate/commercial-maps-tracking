@@ -16,7 +16,6 @@ class CommandController extends Controller
         return response()->json($commands, 200);
     }
 
-
     public function TakCommand(Command $command)
     {
         if (!$command->commercial_id) {
