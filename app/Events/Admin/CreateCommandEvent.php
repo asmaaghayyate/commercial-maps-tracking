@@ -26,15 +26,15 @@ class CreateCommandEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        $channel = 'user.' . $this->user->id;
-
-        Log::info("Broadcasting to channel: " . $channel);
-
-        return [$channel];
+       
+        return ["commercial"];
     }
 
     public function broadcastAs()
     {
-        return 'my-event';
+        $event = 'receive_new_commande' . $this->user->id;
+
+        Log::info("Broadcasting to event: " . $event);
+        return $event;
     }
 }

@@ -127,6 +127,30 @@
                 </div>
             </div>
             <!-- /main-header -->
+            <audio id="notificationsound" src="{{ asset('simple-notification-152054.mp3') }}"></audio>
+            <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = false;
+
+    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+      cluster: 'eu'
+    });
+
+    var channel = pusher.subscribe('admin');
+    channel.bind('Take_new_commande', function(data) {
+
+        document.getElementById('notificationsound').play();
+        Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your work has been saved" + data.message,
+  showConfirmButton: false,
+  timer: 1500
+});
+    });
+  </script>
 
             <!-- container -->
             <div class="container-fluid"> <br>
