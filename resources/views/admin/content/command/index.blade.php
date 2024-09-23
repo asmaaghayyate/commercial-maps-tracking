@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Users Home')
+@section('title', 'Command List')
 
 @section('content')
     <!-- breadcrumb -->

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Users Home')
+@section('title', 'Command Details')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @section('content')
@@ -118,14 +118,9 @@
                     </div>
                     <div class="tab-content border-left border-bottom border-right border-top-0 p-4">
                         <div class="tab-pane active" id="home">
-
-                            <!-- Leaflet CSS -->
-                            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-                            <!-- Leaflet JS -->
-                            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-                            <!-- Leaflet Routing Machine -->
+                            <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+                            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
                             <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-                            <!-- Leaflet Routing Machine CSS -->
                             <link rel="stylesheet"
                                 href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
@@ -134,58 +129,107 @@
                             <script>
                                 let map, destinationMarker, currentLocationMarker, routeControl;
 
-                                // Pass PHP variables to JavaScript
-                                const details = @json(
-                                    $latestLocation
-                                        ? [
-                                            'latitude' => $latestLocation['longitude'],
-                                            'longitude' => $latestLocation['latitude'],
-                                        ]
-                                        : []
-                                );
 
-                                const destination = @json(
-                                    $destinationArray
-                                        ? [
-                                            'latitude' => $destinationArray['longitude'],
-                                            'longitude' => $destinationArray['latitude'],
-                                        ]
-                                        : []
-                                );
+                                function getDestination() {
+                                    console.log({{ $destinationArray['latitude'] }});
 
-                                function initMap() {
-                                    if (map) {
-                                        map.remove();
+                                    return {
+                                        latitude: {{ $destinationArray['latitude'] }},
+                                        longitude: {{ $destinationArray['longitude'] }}
+                                    };
+                                }
+
+                                async function fetchLatestLocation(commandId, fallbackLatitude, fallbackLongitude) {
+                                    console.log('Fetching location for Command ID:', commandId);
+                                    try {
+                                        const response = await fetch(`/api/getLatestLocation/${commandId}`);
+                                        if (!response.ok) throw new Error('Network response was not ok');
+
+                                        const data = await response.json();
+                                        console.log("Data from API is:", data);
+
+                                        // Ensure that latestDetail is not null and has latitude and longitude
+                                        if (data.latestDetail) {
+                                            return {
+                                                latitude: data.latitude,
+                                                longitude: data.longitude
+                                            };
+                                        } else {
+                                            console.error(
+                                                'Latest detail does not contain valid latitude and longitude, using fallback values.');
+                                            return {
+                                                latitude: fallbackLatitude,
+                                                longitude: fallbackLongitude
+                                            }; // Use fallback if API data is not valid
+                                        }
+                                    } catch (error) {
+                                        console.error('Error fetching location:', error);
+                                        return {
+                                            latitude: fallbackLatitude,
+                                            longitude: fallbackLongitude
+                                        }; // Use fallback if there's an error
+                                    }
+                                }
+
+                                Pusher.logToConsole = false;
+
+                                var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+                                    cluster: 'eu'
+                                });
+
+                                var channel = pusher.subscribe('admin');
+                                channel.bind('new_location', function() {
+
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "new location have been send successfully" ,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    const details = await fetchLatestLocation(commandId, destination.latitude, destination.longitude);
+                                });
+
+                                async function initMap(commandId) {
+                                    const destination = getDestination();
+
+                                    // Call fetchLatestLocation with fallback coordinates
+                                    const details = await fetchLatestLocation(commandId, destination.latitude, destination.longitude);
+
+                                    if (!details || !destination) {
+                                        console.error('Location details are missing.');
+                                        return; // Exit if details or destination are not available
                                     }
 
-
+                                    // Initialize the map
                                     map = L.map('map').setView([details.latitude, details.longitude], 13);
 
                                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     }).addTo(map);
 
-                                    // Add destination marker with a specific icon
+                                    const destinationIcon = L.icon({
+                                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png', // Destination marker (larger)
+                                        iconSize: [25, 41],
+                                        iconAnchor: [12, 41]
+                                    });
+
+                                    const currentLocationIcon = L.icon({
+                                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', // Current location marker (default)
+                                        iconSize: [25, 41],
+                                        iconAnchor: [12, 41]
+                                    });
+
+                                    // Add markers using custom icons
                                     destinationMarker = L.marker([destination.latitude, destination.longitude], {
-                                        icon: L.icon({
-                                            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', // Replace with your destination icon URL
-                                            iconSize: [25, 41],
-                                            iconAnchor: [12, 41]
-                                        }),
-                                        draggable: false
-                                    }).addTo(map);
+                                        icon: destinationIcon
+                                    }).addTo(map).bindPopup('Destination');
 
-                                    // Add current location marker with a different icon
                                     currentLocationMarker = L.marker([details.latitude, details.longitude], {
-                                        icon: L.icon({
-                                            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png', // Replace with your current location icon URL
-                                            iconSize: [25, 41],
-                                            iconAnchor: [12, 41]
-                                        }),
-                                        draggable: false
-                                    }).addTo(map);
+                                        icon: currentLocationIcon
+                                    }).addTo(map).bindPopup('Current Location');
 
-                                    // Add a route between the two markers
+                                    // Route between markers
                                     if (destination.latitude && details.latitude) {
                                         routeControl = L.Routing.control({
                                             waypoints: [
@@ -194,19 +238,17 @@
                                             ],
                                             routeWhileDragging: true,
                                             createMarker: function() {
-                                                return null;
+                                                return null; // Prevent creating markers for route points
                                             }
                                         }).addTo(map);
                                     }
                                 }
 
-
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    initMap();
+                                    const commandId = {{ $command->id }};
+                                    initMap(commandId);
                                 });
                             </script>
-
-
                         </div>
                         <div class="tab-pane" id="profile">
                             <div class="row">

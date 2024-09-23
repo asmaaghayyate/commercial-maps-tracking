@@ -18,7 +18,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $data = Command::with(relations: ['commercial', 'admin', 'client'])->latest()->paginate(10);
+        $data = Command::with(['commercial', 'admin', 'client'])->latest()->paginate(10);
         return view('admin.content.command.index', compact('data'));
     }
 
@@ -38,8 +38,8 @@ class CommandController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'latitude' => $request->longitude,
-            'longitude' => $request->latitude,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
         ];
 
         Command::create([
@@ -50,8 +50,10 @@ class CommandController extends Controller
             "client_id" => $request->client_id
         ]);
 
-event(new CreateCommandEvent(message: 'You Have New Command', 
-user: User::where('commercial_id', $request->commercial_id)->first()));
+        event(new CreateCommandEvent(
+            message: 'You Have New Command',
+            user: User::where('commercial_id', $request->commercial_id)->first()
+        ));
 
         return redirect()->route('admin.command.index')->with([
             "success" => "data create with success"
@@ -65,18 +67,17 @@ user: User::where('commercial_id', $request->commercial_id)->first()));
     {
         $command->load(['commercial.user', 'admin', 'client.user']);
 
-        $latestDetail = CommandDetail::where('command_id', $command->id)->latest()->first();
-
-        $destinationArray = json_decode($command->destination, true);
-        $latestLocation = json_decode($latestDetail->current_location, true);
+        // Check if destination is a JSON string or an array
+        $destinationArray = is_string($command->destination)
+            ? json_decode($command->destination, true)
+            : $command->destination; // Use directly if it's already an array
 
         return view('admin.content.command.show', [
             'command' => $command,
             'destinationArray' => $destinationArray,
-            'latestLocation' => $latestLocation,
-
         ]);
     }
+
 
 
     /**
