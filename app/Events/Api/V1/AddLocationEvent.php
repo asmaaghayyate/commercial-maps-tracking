@@ -2,35 +2,35 @@
 
 namespace App\Events\Api\V1;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AddLocationEvent
+use Illuminate\Support\Facades\Log;
+
+class AddLocationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public $commandId;
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
+    public function __construct($commandId)
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        $this->commandId = $commandId;
+    }
+    public function broadcastOn()
+    {
+        return ["admin"];
+    }
+    public function broadcastAs()
+    {
+        $event = 'new_location_' . $this->commandId;
+
+        Log::info("Broadcasting to event: " . $event);
+        return $event;
     }
 }
