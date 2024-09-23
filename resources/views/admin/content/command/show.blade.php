@@ -182,10 +182,12 @@
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
-                                        title: "new location have been send successfully" ,
+                                        title: "new location have been send successfully",
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
+                                    const commandId = {{ $command->id }};
+                                    initMap(commandId);
                                 });
                                 async function initMap(commandId) {
                                     const destination = getDestination();
@@ -194,10 +196,16 @@
                                         console.error('Location details are missing.');
                                         return; // Exit if details or destination are not available
                                     }
-                                    map = L.map('map').setView([details.latitude, details.longitude], 13);
-                                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                    }).addTo(map);
+
+                                    if (!map) {
+                                        map = L.map('map').setView([details.latitude, details.longitude], 13);
+                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        }).addTo(map);
+                                    } else {
+                                        map.setView([details.latitude, details.longitude], 13); // Update view if map exists
+                                    }
+
                                     const destinationIcon = L.icon({
                                         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png', // Destination marker (larger)
                                         iconSize: [25, 41],
@@ -208,6 +216,17 @@
                                         iconSize: [25, 41],
                                         iconAnchor: [12, 41]
                                     });
+
+                                    if (destinationMarker) {
+                                        map.removeLayer(destinationMarker);
+                                    }
+                                    if (currentLocationMarker) {
+                                        map.removeLayer(currentLocationMarker);
+                                    }
+                                    if (routeControl) {
+                                        routeControl.remove(); // Remove existing route if it exists
+                                    }
+
 
                                     // Add markers using custom icons
                                     destinationMarker = L.marker([destination.latitude, destination.longitude], {
