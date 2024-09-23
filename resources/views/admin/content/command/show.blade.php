@@ -179,7 +179,6 @@
 
                                 var channel = pusher.subscribe('admin');
                                 channel.bind('new_location', function() {
-
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
@@ -187,33 +186,23 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    const details = await fetchLatestLocation(commandId, destination.latitude, destination.longitude);
                                 });
-
                                 async function initMap(commandId) {
                                     const destination = getDestination();
-
-                                    // Call fetchLatestLocation with fallback coordinates
                                     const details = await fetchLatestLocation(commandId, destination.latitude, destination.longitude);
-
                                     if (!details || !destination) {
                                         console.error('Location details are missing.');
                                         return; // Exit if details or destination are not available
                                     }
-
-                                    // Initialize the map
                                     map = L.map('map').setView([details.latitude, details.longitude], 13);
-
                                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     }).addTo(map);
-
                                     const destinationIcon = L.icon({
                                         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png', // Destination marker (larger)
                                         iconSize: [25, 41],
                                         iconAnchor: [12, 41]
                                     });
-
                                     const currentLocationIcon = L.icon({
                                         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', // Current location marker (default)
                                         iconSize: [25, 41],
