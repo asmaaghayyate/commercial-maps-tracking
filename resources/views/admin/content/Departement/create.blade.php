@@ -10,15 +10,6 @@
                 <div class="main-content-label mg-b-5">
                     Create A Departement
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form action="{{ route('admin.departement.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="role" value="client">

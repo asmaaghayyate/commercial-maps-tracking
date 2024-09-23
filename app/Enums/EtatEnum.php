@@ -13,9 +13,9 @@ enum EtatEnum: string
     public static function getColor(string $etat): string
     {
         return match ($etat) {
-            self::INITIAL->value => 'green',
-            self::EN_COURS->value => 'yellow',
-            self::FINAL->value => 'red',
+            self::INITIAL->value => 'success',
+            self::EN_COURS->value => 'warning',
+            self::FINAL->value => 'danger',
             default => 'transparent', // Fallback color
         };
     }

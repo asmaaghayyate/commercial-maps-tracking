@@ -48,8 +48,11 @@
                                         <td>{{ $item->admin?->name }}</td>
                                         <td>{{ $item->commercial?->user->name }}</td>
                                         <td>{{ Str::limit($item->destination_name, 25, '...')  }}</td>
-                                        <td style="background-color: {{ \App\Enums\EtatEnum::getColor($item->etat) }}; font-weight: bold;">
-                                            {{ $item->etat }}
+                                        <td style="">
+                                            <span class="badge badge-{{ \App\Enums\EtatEnum::getColor($item->etat) }}">
+
+                                                {{ $item->etat }}
+                                            </span>
                                         </td>
 
 

@@ -50,7 +50,8 @@ class CommandController extends Controller
             "client_id" => $request->client_id
         ]);
 
-        event(new CreateCommandEvent(message: 'You Have New Command', user: User::where('commercial_id', $request->commercial_id)->first()));
+event(new CreateCommandEvent(message: 'You Have New Command', 
+user: User::where('commercial_id', $request->commercial_id)->first()));
 
         return redirect()->route('admin.command.index')->with([
             "success" => "data create with success"
