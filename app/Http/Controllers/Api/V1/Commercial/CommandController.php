@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Commercial;
 
 use App\Events\Admin\TakCommandeEvent;
+use App\Events\Api\V1\AddLocationEvent;
 use App\Events\Api\V1\TakeCommandEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Command;
@@ -38,7 +39,7 @@ class CommandController extends Controller
 
     public function AddLocation(Command $command, Request $request)
     {
-        if (auth()->id() === $command->commercial_id) {
+        if (auth()->user()->commercial->id === $command->commercial_id) {
             $request->validate([
                 'current_location' => 'required|json',
             ]);
@@ -47,7 +48,7 @@ class CommandController extends Controller
                 'command_id' => $command->id,
                 'current_location' => $request->current_location,
             ]);
-            event(new TakeCommandEvent('command have been taked'));
+            event(new AddLocationEvent($command->id));
 
             return response()->json([
                 "message" => "Localisation ajoutée avec succès."
