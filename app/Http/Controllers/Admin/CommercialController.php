@@ -38,7 +38,7 @@ class CommercialController extends Controller
      */
     public function store(CreateCommercialRequest $request)
     {
-        $user = User::create([
+        $user = User::create([ 
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -90,12 +90,12 @@ class CommercialController extends Controller
             ],
         ]);
 
-        $user->update([
-            'name' => $request->name,
+          'name' => $request->name,
             'email' => $request->email,
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
             'phone' => $request->phone,
-        ]);
+        ]); $user->update([
+         
 
         // Update Commercial
         $commercial->update($request->except(['name', 'email', 'password', 'role', 'phone']));

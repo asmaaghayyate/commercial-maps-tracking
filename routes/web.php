@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CommandController;
@@ -29,6 +30,13 @@ Route::prefix('admin')->middleware(["auth"])->name('admin.')->group(function(){
 
     Route::resource('departement' , DepartementController::class);
     Route::resource('command' , CommandController::class);
+
+    Route::resource('user' , AdminController::class);
+
+//Route::delete('admin/{user}', [AdminController::class, 'destroyy'])->name('adminn.destroy');
+
+
+
 });
 
 

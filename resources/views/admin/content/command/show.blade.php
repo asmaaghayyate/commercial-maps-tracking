@@ -179,13 +179,7 @@
 
                                 var channel = pusher.subscribe('admin');
                                 channel.bind('new_location_' + {{ $command->id }}, function() {
-                                    Swal.fire({
-                                        position: "top-end",
-                                        icon: "success",
-                                        title: "new location have been send successfully",
-                                        showConfirmButton: false,
-                                        timer: 5500
-                                    });
+                                   
                                     const commandId = {{ $command->id }};
                                     initMap(commandId);
                                 });

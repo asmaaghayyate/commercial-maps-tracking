@@ -50,7 +50,7 @@
                     <li><a class="slide-item" href="{{ route('admin.commercial.index') }}">Commercial</a></li>
                     <li><a class="slide-item" href="{{ route('admin.client.index') }}">Clients</a>
                     </li>
-                    <li><a class="slide-item" href="">Admins</a>
+                    <li><a class="slide-item" href="{{ route('admin.user.index') }}">Admins</a>
                     </li>
                 </ul>
             </li>

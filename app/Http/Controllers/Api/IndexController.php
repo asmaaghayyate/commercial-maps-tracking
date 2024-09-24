@@ -19,6 +19,7 @@ class IndexController extends Controller
                 ? json_decode($latestDetail->current_location, true)
                 : $latestDetail->current_location; // Use directly if it's already an array
 
+            
             // Ensure latitude and longitude are available
             return response()->json([
                 'latitude' => $currentLocation['latitude'] ?? null,

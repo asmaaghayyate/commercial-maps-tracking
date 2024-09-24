@@ -23,6 +23,8 @@ Route::prefix('v1')->group(function () {
             Route::get('MyCommands' , "MyCommands");
             Route::post('TakCommand/{command}' , "TakCommand");
             Route::post('AddLocation/{command}' , "AddLocation");
+            Route::get('Listecommandes' , "Listecommandes");
+
         });
     });
 });

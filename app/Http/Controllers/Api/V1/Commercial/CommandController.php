@@ -59,4 +59,12 @@ class CommandController extends Controller
             ], 400);
         }
     }
+
+public function listecommandes(){
+
+    $commands = Command::whereNull('commercial_id')->get(); // Récupérer les commandes avec commercial_id = null
+    return response()->json($commands, 200);
+}
+
+
 }
