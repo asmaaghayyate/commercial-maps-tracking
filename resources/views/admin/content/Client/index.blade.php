@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @php
-                            $columns = ['Name', 'Email', 
+                            $columns = ['Name', 'Email', 'Phone',
                           'Adresse', 'Action'];
                         @endphp
                         <table class="table table-hover mb-0 text-md-nowrap">
@@ -47,6 +47,7 @@
                                     <tr>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->email }}</td>
+                                        <td>{{ $item->user->phone }}</td>
                                         <td>{{ $item->adresse }}</td>
                                       
 

@@ -90,11 +90,11 @@ class CommercialController extends Controller
             ],
         ]);
 
-          'name' => $request->name,
+    $user->update([ 'name' => $request->name,
             'email' => $request->email,
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
             'phone' => $request->phone,
-        ]); $user->update([
+        ]); 
          
 
         // Update Commercial

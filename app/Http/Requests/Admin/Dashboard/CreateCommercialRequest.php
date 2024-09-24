@@ -34,6 +34,8 @@ class CreateCommercialRequest extends FormRequest
             'date_fin' => 'required|date|after_or_equal:date_debut',
             'type_contrat' => 'required|string|max:255',
             'departement_id' => 'required|exists:departements,id',
+            'phone' => 'required|string|regex:/^\+?[0-9\s\-\(\)]+$/',
+
         ];
     }
 }

@@ -27,6 +27,8 @@ class CreateClientRequest extends FormRequest
             'password' => 'required|string|min:5',
             'role' => 'required|string|in:admin,client,commercial',
             'adresse' => 'required|string|max:255',
+            'phone' => 'required|string|regex:/^\+?[0-9\s\-\(\)]+$/',
+
         ];
     }
 }

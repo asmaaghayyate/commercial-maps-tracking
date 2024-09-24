@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::permanentRedirect('/', '/admin');
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('login',  "LoginForm")->name('login');
+    Route::get('login',  "LoginForm")->name('login')->middleware('guest');
     Route::post('loginf',  "Login")->name(name: 'loginf');
     Route::post('logout',  "logout")->name(name: 'logout');
 });

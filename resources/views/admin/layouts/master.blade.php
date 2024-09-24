@@ -17,7 +17,7 @@
 
     <!-- Icons css -->
     <link href="{{ asset('assets/css/icons.css') }} " rel="stylesheet">
-
+    <link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet">
     <!--  Owl-carousel css-->
     <link href="{{ asset('assets/plugins/owl-carousel/owl.carousel.css') }} " rel="stylesheet" />
 
