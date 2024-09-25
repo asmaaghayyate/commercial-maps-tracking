@@ -12,6 +12,8 @@ Route::prefix('v1')->group(function () {
     //
     Route::controller(CommercialAuth::class)->group(function() {
         Route::post('commercial/login' , 'login');
+        Route::get('commercial/profile','profile')->middleware(['auth:commercial']);
+        Route::post('commercial/update','update')->middleware(['auth:commercial']);
     });
     //
     Route::controller(ClientAuth::class)->group(function() {

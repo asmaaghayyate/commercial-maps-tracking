@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin');
 });
 
 Route::permanentRedirect('/', '/admin');
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('login',  "LoginForm")->name('login')->middleware('guest');
-    Route::post('loginf',  "Login")->name(name: 'loginf');
-    Route::post('logout',  "logout")->name(name: 'logout');
+    Route::post('loginf',  "Login")->name('loginf');
+    Route::post('logout',  "logout")->name('logout');
 });
 
 Route::prefix('admin')->middleware(["admin"])->name('admin.')->group(function(){
@@ -32,10 +32,6 @@ Route::prefix('admin')->middleware(["admin"])->name('admin.')->group(function(){
     Route::resource('command' , CommandController::class);
 
     Route::resource('user' , AdminController::class);
-
-//Route::delete('admin/{user}', [AdminController::class, 'destroyy'])->name('adminn.destroy');
-
-
 
 });
 
