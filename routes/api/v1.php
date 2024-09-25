@@ -20,7 +20,7 @@ Route::prefix('v1')->group(function () {
         Route::post('client/login' , 'login');
     });
 
-    Route::middleware(['auth:commercial'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         Route::controller(CommandController::class)->group(function () {
             Route::get('MyCommands' , "MyCommands");
             Route::post('TakCommand/{command}' , "TakCommand");
