@@ -117,6 +117,8 @@
                         </ul>
                     </div>
                     <div class="tab-content border-left border-bottom border-right border-top-0 p-4">
+
+
                         <div class="tab-pane active" id="home">
                             <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
                             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -206,8 +208,8 @@
                                         iconAnchor: [12, 41]
                                     });
                                     const currentLocationIcon = L.icon({
-                                        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', // Current location marker (default)
-                                        iconSize: [25, 41],
+                                        iconUrl:"{{ asset('images/image2.png')}}", // Current location marker (default)
+                                        iconSize: [36, 43],
                                         iconAnchor: [12, 41]
                                     });
 
@@ -251,7 +253,11 @@
                                     initMap(commandId);
                                 });
                             </script>
+
                         </div>
+
+
+                        
                         <div class="tab-pane" id="profile">
                             <div class="row">
                                 <div class="col-sm-4">
