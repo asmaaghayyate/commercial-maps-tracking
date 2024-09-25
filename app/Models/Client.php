@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Laravel\Sanctum\HasApiTokens;
 
-class Client extends Model implements JWTSubject
+class Client extends Model implements AuthenticatableContract
 {
-    use HasFactory;
+    use HasFactory, Authenticatable, HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -17,15 +19,4 @@ class Client extends Model implements JWTSubject
         'phone',
         'adresse',
     ];
-
-    // JWTSubject methods
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(array $extraClaims = [])
-    {
-        return [];
-    }
 }

@@ -2,33 +2,22 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default authentication "guard" and password
-    | reset options for your application. You may change these defaults
-    | as required, but they're a perfect start for most applications.
-    |
-    */
-
     'defaults' => [
-        'guard' => 'admin',
+        'guard' => 'web',
         'passwords' => 'admins',
     ],
 
     'guards' => [
-        'admin' => [
+        'web' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
         'commercial' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum',
             'provider' => 'commercials',
         ],
         'client' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum',
             'provider' => 'clients',
         ],
     ],
@@ -47,17 +36,24 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Client::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'commercials' => [
+            'provider' => 'commercials',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'clients' => [
+            'provider' => 'clients',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

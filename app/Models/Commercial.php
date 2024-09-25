@@ -6,11 +6,11 @@ use Illuminate\Auth\Authenticatable; // Import the Authenticatable trait
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Sanctum\HasApiTokens;
 
-class Commercial extends Model implements AuthenticatableContract, JWTSubject
+class Commercial extends Model implements AuthenticatableContract
 {
-    use HasFactory , Authenticatable;
+    use HasFactory , Authenticatable , HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -26,16 +26,6 @@ class Commercial extends Model implements AuthenticatableContract, JWTSubject
         'type_contrat',
         'departement_id'
     ];
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(array $extraClaims = [])
-    {
-        return [];
-    }
 
     public function departement()
     {
