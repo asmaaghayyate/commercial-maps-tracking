@@ -44,9 +44,9 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->user->phone }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->phone }}</td>
                                         <td>{{ $item->genre }}</td>
                                         <td>{{ $item->type_deplacement }}</td>
                                         <td>{{ $item->identite }}</td>
@@ -54,7 +54,7 @@
                                         <td>{{ $item->date_debut }}</td>
                                         <td>{{ $item->date_fin }}</td>
                                         <td>{{ $item->type_contrat }}</td>
-                                        <td>{{ $item->departement->name }}</td>
+                                        <td>{{ $item->departement?->name }}</td>
 
                                         <td class="d-flex">
                                             <a href="{{ route('admin.commercial.edit', $item) }}"

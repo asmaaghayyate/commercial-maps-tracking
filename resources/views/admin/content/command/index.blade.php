@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $item->client?->user->name }}</td>
                                         <td>{{ $item->admin?->name }}</td>
-                                        <td>{{ $item->commercial?->user->name }}</td>
+                                        <td>{{ $item->commercial?->name }}</td>
                                         <td>{{ Str::limit($item->destination_name, 25, '...')  }}</td>
                                         <td style="">
                                             <span class="badge badge-{{ \App\Enums\EtatEnum::getColor($item->etat) }}">

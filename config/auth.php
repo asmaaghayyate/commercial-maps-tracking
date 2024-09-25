@@ -14,26 +14,38 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'admin',
+        'passwords' => 'admins',
     ],
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
-        'api' => [
+        'commercial' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'commercials',
+        ],
+        'client' => [
+            'driver' => 'jwt',
+            'provider' => 'clients',
         ],
     ],
 
 
     'providers' => [
-        'users' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
+        ],
+        'commercials' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Commercial::class,
+        ],
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Client::class,
         ],
 
         // 'users' => [

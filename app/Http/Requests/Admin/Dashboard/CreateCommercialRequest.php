@@ -23,9 +23,8 @@ class CreateCommercialRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:commercials,email',
             'password' => 'required|string|min:5',
-            'role' => 'required|string|in:admin,client,commercial',
             'genre' => 'required|string|max:255',
             'type_deplacement' => 'required|string|max:255',
             'identite' => 'required|string|max:255',

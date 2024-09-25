@@ -45,11 +45,10 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->user->phone }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->phone }}</td>
                                         <td>{{ $item->adresse }}</td>
-                                      
 
                                         <td class="d-flex">
                                             <a href="{{ route('admin.client.edit', $item) }}"

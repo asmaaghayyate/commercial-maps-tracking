@@ -26,7 +26,6 @@ class CreateCommandEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-       
         return ["commercial"];
     }
 

@@ -2,16 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable; // Import the Authenticatable trait
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Commercial extends Model
+class Commercial extends Model implements AuthenticatableContract, JWTSubject
 {
-    use HasFactory;
+    use HasFactory , Authenticatable;
 
     protected $fillable = [
-        'user_id',
+        'name',
+        'email',
+        'password',
         'genre',
+        'phone',
         'type_deplacement',
         'identite',
         'adresse',
@@ -21,9 +27,14 @@ class Commercial extends Model
         'departement_id'
     ];
 
-    public function user()
+    public function getJWTIdentifier()
     {
-        return $this->belongsTo(User::class);
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(array $extraClaims = [])
+    {
+        return [];
     }
 
     public function departement()

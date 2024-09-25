@@ -18,7 +18,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $data = Client::latest()->with('user')->paginate(10);
+        $data = Client::latest()->paginate(10);
         return view('admin.content.client.index', compact('data'));
     }
 
@@ -36,20 +36,13 @@ class ClientController extends Controller
     public function store(CreateClientRequest $request)
     {
         // Inside your controller or service
-        $user = User::create([
+        Client::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone' => $request->phone,
-            'role' => $request->role,
+            // 'phone' => $request->phone,
+            'adresse' => $request->adresse,
         ]);
-
-        $client = $user->client()->create(array_merge(
-            $request->except(['email', 'password', 'role']),
-            ['user_id' => $user->id]
-        ));
-
-        $user->update(['client_id' => $client->id]);
 
         Cache::forget(key: 'client_list');
         return redirect()->route('admin.client.index')
@@ -78,24 +71,25 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-
-        $user = User::findOrFail($client->user_id);
-        $this->validate($request, [
+        $this->validate($request , [
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string|min:5',
+            'adresse' => 'required|string|max:255',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($user->id),
+                Rule::unique('clients', 'email')->ignore($client->id),
             ],
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
-        ]);
+        $client->update($request->except('password')); // Exclude password if it's not being updated
 
-        // Update Commercial
-        $client->update($request->except(['name', 'email', 'password', 'role']));
+        // Optionally, handle password update if provided
+        if ($request->filled('password')) {
+            $client->password = bcrypt($request->password);
+            $client->save();
+        }
+
         Cache::forget(key: 'client_list');
 
         return redirect()->route('admin.client.index')

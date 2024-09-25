@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('admin.commercial.update' , $commercial) }}" method="POST">
+                <form action="{{ route('admin.commercial.update', $commercial) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row row-sm">
@@ -27,7 +27,7 @@
                             <div class="form-group mg-b-0">
                                 <label class="form-label">name: <span class="tx-danger">*</span></label>
                                 <input class="form-control" name="name" placeholder="Enter user name" required=""
-                                    value="{{ old('name', $commercial->user->name) }}" type="text" />
+                                    value="{{ old('name', $commercial->name) }}" type="text" />
                                 @error('name')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -37,7 +37,7 @@
                             <div class="form-group mg-b-0">
                                 <label class="form-label">email: <span class="tx-danger">*</span></label>
                                 <input class="form-control" name="email" placeholder="Enter user email" required
-                                    value="{{ old('email', $commercial->user->email) }}" type="email" />
+                                    value="{{ old('email', $commercial->email) }}" type="email" />
                                 @error('email')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -68,6 +68,16 @@
                                 toggleIcon.classList.toggle('fa-eye-slash');
                             });
                         </script>
+                        <div class="col-6">
+                            <div class="form-group mg-b-0">
+                                <label class="form-label">Phone: <span class="tx-danger">*</span></label>
+                                <input class="form-control" name="phone" placeholder="Enter user phone" required
+                                    value="{{ old('phone' , $commercial->phone) }}" type="tel"  />
+                                @error('phone')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="col-6">
                             <div class="form-group mg-b-0">

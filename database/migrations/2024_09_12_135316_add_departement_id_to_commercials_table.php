@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('commercials', function (Blueprint $table) {
-            $table->foreignIdFor(Departement::class);
+            $table->foreignIdFor(Departement::class)->nullable();
         });
     }
 

@@ -6,6 +6,7 @@ use App\Events\Admin\CreateCommandEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Command;
 use App\Models\CommandDetail;
+use App\Models\Commercial;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +53,7 @@ class CommandController extends Controller
 
         event(new CreateCommandEvent(
             message: 'You Have New Command',
-            user: User::where('commercial_id', $request->commercial_id)->first()
+            user: Commercial::find( $request->commercial_id)
         ));
 
         return redirect()->route('admin.command.index')->with([

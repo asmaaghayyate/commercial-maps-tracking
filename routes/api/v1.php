@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     //
     Route::controller(CommercialAuth::class)->group(function() {
-        Route::post('login' , 'login');
+        Route::post('commercial/login' , 'login');
     });
     //
     Route::controller(ClientAuth::class)->group(function() {
-        Route::post('login' , 'login');
+        Route::post('client/login' , 'login');
     });
 
-    Route::middleware(['auth:api','commercialAuth'])->group(function () {
+    Route::middleware(['auth:commercial'])->group(function () {
         Route::controller(CommandController::class)->group(function () {
             Route::get('MyCommands' , "MyCommands");
             Route::post('TakCommand/{command}' , "TakCommand");

@@ -148,7 +148,7 @@
                                     <option value="" disabled selected>Select Commercial</option>
                                     @forelse ($commercials as $item)
                                         <option {{ old('commercial_id') == $item->id ? 'selected' : '' }}
-                                            value="{{ $item->id }}">{{ $item->user->name }}
+                                            value="{{ $item->id }}">{{ $item->name }}
                                         </option>
                                     @empty
                                     @endforelse
@@ -167,7 +167,7 @@
                                     @forelse ($clients as $item)
                                         @if($item->user) <!-- Vérifie si user n'est pas nul -->
                                             <option value="{{ $item->id }}" {{ old('client_id') == $item->id ? 'selected' : '' }}>
-                                                {{ $item->user->name }}
+                                                {{ $item->name }}
                                             </option>
                                         @endif
                                     @empty

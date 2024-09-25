@@ -27,7 +27,7 @@
                             <div class="form-group mg-b-0">
                                 <label class="form-label">name: <span class="tx-danger">*</span></label>
                                 <input class="form-control" name="name" placeholder="Enter user name" required=""
-                                    value="{{ old('name', $client->user->name) }}" type="text" />
+                                    value="{{ old('name', $client->name) }}" type="text" />
                                 @error('name')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -37,7 +37,7 @@
                             <div class="form-group mg-b-0">
                                 <label class="form-label">email: <span class="tx-danger">*</span></label>
                                 <input class="form-control" name="email" placeholder="Enter user email" required
-                                    value="{{ old('email', $client->user->email) }}" type="email" />
+                                    value="{{ old('email', $client->email) }}" type="email" />
                                 @error('email')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                    
+
                         <div class="col-12">
                             <button class="btn btn-main-primary pd-x-20 mg-t-10" type="submit">
                                 Validate Form

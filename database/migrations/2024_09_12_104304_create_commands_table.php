@@ -16,11 +16,11 @@ return new class extends Migration
     {
         Schema::create('commands', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Client::class)->onDelete('cascade')->nullable();
-            $table->foreignIdFor(Commercial::class)->onDelete('cascade')->nullable();
-            $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('admin_id')->nullable()->constrained('admins')->onDelete('cascade');
+            $table->foreignId('commercial_id')->nullable()->constrained('commercials')->onDelete('cascade');
+            $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('cascade');
+            //
             $table->enum('etat', ['initial', 'en cours', 'final'])->default('initial');
-
             $table->json('destination');
             $table->string('destination_name')->nullable();
             $table->string('status')->nullable();

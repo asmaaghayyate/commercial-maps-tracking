@@ -20,7 +20,7 @@ class CommercialController extends Controller
      */
     public function index()
     {
-        $data = Commercial::latest()->with('user')->paginate(10);
+        $data = Commercial::latest()->with('departement')->paginate(10);
         return view('admin.content.commercial.index', compact('data'));
     }
 
@@ -38,20 +38,7 @@ class CommercialController extends Controller
      */
     public function store(CreateCommercialRequest $request)
     {
-        $user = User::create([ 
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'phone' => $request->phone,
-        ]);
-
-        $commercial =   Commercial::create(array_merge(
-            $request->except(['name', 'email', 'password', 'role']),
-            ['user_id' => $user->id]
-        ));
-
-        $user->update(attributes: ['commercial_id' => $commercial->id]);
+        Commercial::create($request->all());
 
         Cache::forget('commercial_list');
 
@@ -81,29 +68,43 @@ class CommercialController extends Controller
      */
     public function update(Request $request, Commercial $commercial)
     {
-        $user = User::findOrFail($commercial->user_id);
+        // Validate the incoming request
         $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string|min:5',
+            'genre' => 'required|string|max:255',
+            'type_deplacement' => 'required|string|max:255',
+            'identite' => 'required|string|max:255',
+            'adresse' => 'required|string|max:1000',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date|after_or_equal:date_debut',
+            'type_contrat' => 'required|string|max:255',
+            'departement_id' => 'required|exists:departements,id',
+            'phone' => 'nullable|string|regex:/^\+?[0-9\s\-\(\)]+$/',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($user->id),
+                Rule::unique('commercials')->ignore($commercial->id),
             ],
         ]);
 
-    $user->update([ 'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
-            'phone' => $request->phone,
-        ]); 
-         
+        // Update the commercial record
+        $commercial->update($request->except('password')); // Exclude password if it's not being updated
 
-        // Update Commercial
-        $commercial->update($request->except(['name', 'email', 'password', 'role', 'phone']));
+        // Optionally, handle password update if provided
+        if ($request->filled('password')) {
+            $commercial->password = bcrypt($request->password);
+            $commercial->save();
+        }
+
+        // Clear the cached commercial list
         Cache::forget('commercial_list');
 
+        // Redirect back with a success message
         return redirect()->route('admin.commercial.index')
             ->with('success', 'Commercial and User updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

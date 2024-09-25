@@ -12,20 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-           // $table->enum('role', ['admin', 'client', 'commercial'])->default('client');
-            $table->enum('role', [
-                RoleEnum::ADMIN->value,
-                RoleEnum::CLIENT->value,
-                RoleEnum::COMMERCIAL->value,
-            ])->default(RoleEnum::CLIENT->value); // Default value
             $table->rememberToken();
-            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }

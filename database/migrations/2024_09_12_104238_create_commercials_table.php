@@ -14,15 +14,20 @@ return new class extends Migration
     {
         Schema::create('commercials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unsigned();
-            $table->foreign('user_id')->references("id")->on('users')->onDelete('cascade');
-            $table->string('genre');
-            $table->string('type_deplacement');
-            $table->string('identite');
-            $table->text('adresse');
-            $table->date('date_debut');
-            $table->date('date_fin');
-            $table->string('type_contrat');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            //
+            $table->string('genre')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('type_deplacement')->nullable();
+            $table->string('identite')->nullable();
+            $table->text('adresse')->nullable();
+            $table->date('date_debut')->nullable();
+            $table->date('date_fin')->nullable();
+            $table->string('type_contrat')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

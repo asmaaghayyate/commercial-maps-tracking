@@ -18,19 +18,14 @@ class AuthController extends Controller
     public function Login(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email|exists:admins,email',
             'password' => 'required|min:8',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role === RoleEnum::ADMIN->value) {
-                return redirect()->intended('/admin');
-            } else {
-                Auth::logout();
-                return redirect()->back()->with([
-                    'error' => 'You are not authorized to access this area.',
-                ]);
-            }
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->intended('/admin');
         } else {
             return redirect()->back()->with([
                 'error' => 'These credentials do not match our records.',
@@ -38,14 +33,10 @@ class AuthController extends Controller
         }
     }
 
-   public  function logout()
+    public  function logout()
     {
-       
+
         Auth::logout();
-       return redirect('/login');
+        return redirect('/login');
     }
-
-
-
-    
 }
