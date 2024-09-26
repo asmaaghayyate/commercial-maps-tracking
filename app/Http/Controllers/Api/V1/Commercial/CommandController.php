@@ -26,7 +26,7 @@ class CommandController extends Controller
     {
         if (!$command->commercial_id) {
             $command->update([
-                "commercial_id" => auth()->user()->commercial->id
+                "commercial_id" => auth()->guard("commercial")->user()->id
             ]);
             event(new TakeCommandEvent('command have been taked'));
             return response()->json([
