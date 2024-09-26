@@ -3,15 +3,16 @@
 return [
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'admin',
         'passwords' => 'admins',
     ],
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+
         'commercial' => [
             'driver' => 'sanctum',
             'provider' => 'commercials',

@@ -33,7 +33,7 @@ class CommercialAuth extends Controller
 
     public function profile()
     {
-        $user = Auth::user();
+        $user = Auth::guard('commercial')->user();
 
         return response()->json([
             'status' => 'success',
