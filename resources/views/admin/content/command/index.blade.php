@@ -44,7 +44,7 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->client?->user->name }}</td>
+                                        <td>{{ $item->client?->name }}</td>
                                         <td>{{ $item->admin?->name }}</td>
                                         <td>{{ $item->commercial?->name }}</td>
                                         <td>{{ Str::limit($item->destination_name, 25, '...')  }}</td>

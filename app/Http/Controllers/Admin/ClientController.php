@@ -40,7 +40,7 @@ class ClientController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            // 'phone' => $request->phone,
+             'phone' => $request->phone,
             'adresse' => $request->adresse,
         ]);
 
@@ -75,6 +75,7 @@ class ClientController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'nullable|string|min:5',
             'adresse' => 'required|string|max:255',
+            'phone' => 'required|string|regex:/^\+?[0-9\s\-\(\)]+$/',
             'email' => [
                 'required',
                 'email',

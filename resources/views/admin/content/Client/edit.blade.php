@@ -68,7 +68,16 @@
                                 toggleIcon.classList.toggle('fa-eye-slash');
                             });
                         </script>
-
+                            <div class="col-6">
+                                <div class="form-group mg-b-0">
+                                    <label class="form-label">Phone: <span class="tx-danger">*</span></label>
+                                    <input class="form-control" name="phone" placeholder="Enter user phone" required
+                                        value="{{ old('phone') }}" type="tel" />
+                                    @error('phone')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         <div class="col-12">
                             <div class="form-group mg-b-0">
                                 <label class="form-label">Adresse: <span class="tx-danger">*</span></label>
