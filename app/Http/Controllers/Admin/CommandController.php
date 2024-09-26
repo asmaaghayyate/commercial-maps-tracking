@@ -75,7 +75,7 @@ class CommandController extends Controller
      */
     public function show(Command $command)
     {
-        $command->load(['commercial.user', 'admin', 'client.user']);
+        $command->load(['commercial', 'admin', 'client']);
 
         // Check if destination is a JSON string or an array
         $destinationArray = is_string($command->destination)

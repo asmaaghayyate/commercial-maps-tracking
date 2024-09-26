@@ -65,7 +65,7 @@ class CommandController extends Controller
     public function listecommandes()
     {
 
-        $commands = Command::whereNull('commercial_id')->paginate(10); // Récupérer les commandes avec commercial_id = null
+        $commands = Command::whereNull('commercial_id')->with('client')->paginate(10); // Récupérer les commandes avec commercial_id = null
         return response()->json($commands, 200);
     }
 }
