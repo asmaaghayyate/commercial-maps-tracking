@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
@@ -21,7 +22,7 @@ class Admin extends Authenticatable
         parent::boot();
 
         static::creating(function ($admin) {
-            $admin->password = bcrypt($admin->password);
+            $admin->password = Hash::make($admin->password);
         });
     }
 }
