@@ -165,11 +165,9 @@
                                 <select name="client_id" class="form-control SlectBox SumoUnder">
                                     <option value="" disabled selected>Select Client</option>
                                     @forelse ($clients as $item)
-                                        @if($item->user) <!-- Vérifie si user n'est pas nul -->
                                             <option value="{{ $item->id }}" {{ old('client_id') == $item->id ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
-                                        @endif
                                     @empty
                                         <option disabled>No clients available</option>
                                     @endforelse
