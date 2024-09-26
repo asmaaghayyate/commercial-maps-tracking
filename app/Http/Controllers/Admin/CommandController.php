@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\Admin\CreateCommandEvent;
+use App\Events\Admin\CreateGlobalCommandEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Command;
 use App\Models\CommandDetail;
@@ -51,10 +52,18 @@ class CommandController extends Controller
             "client_id" => $request->client_id
         ]);
 
-        event(new CreateCommandEvent(
-            message: 'You Have New Command',
-            user: Commercial::find( $request->commercial_id)
-        ));
+        if ($request->has('commercial_id')) {
+            event(new CreateCommandEvent(
+                message: 'You Have New Command',
+                user: Commercial::find( $request->commercial_id)
+            ));
+        } else {
+            event(new CreateGlobalCommandEvent(
+                message: 'there is a new command avalaible',
+            ));
+            # code...
+        }
+        
 
         return redirect()->route('admin.command.index')->with([
             "success" => "data create with success"
