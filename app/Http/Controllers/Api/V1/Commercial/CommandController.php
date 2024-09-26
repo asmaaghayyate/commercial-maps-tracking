@@ -41,7 +41,9 @@ class CommandController extends Controller
 
     public function AddLocation(Command $command, Request $request)
     {
-        if (auth()->user()->commercial->id === $command->commercial_id) {
+
+       // return $command->id;
+        if (auth()->guard("commercial")->user()->id === $command->commercial_id) {
             $request->validate([
                 'current_location' => 'required|json',
             ]);
