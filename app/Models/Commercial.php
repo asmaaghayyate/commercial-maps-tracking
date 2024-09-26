@@ -6,6 +6,7 @@ use Illuminate\Auth\Authenticatable; // Import the Authenticatable trait
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class Commercial extends Model implements AuthenticatableContract
@@ -26,6 +27,18 @@ class Commercial extends Model implements AuthenticatableContract
         'type_contrat',
         'departement_id'
     ];
+
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($commercial) {
+            $commercial->password = Hash::make($commercial->password);
+        });
+    }
+
+
 
     public function departement()
     {
