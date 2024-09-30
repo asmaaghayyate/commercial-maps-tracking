@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,11 +15,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        $data = User::where('role', 'admin')->paginate(10); // Récupérer les utilisateurs avec le rôle "admin"
+        $data = Admin::paginate(10); // Récupérer les utilisateurs avec le rôle "admin"
         return view('admin.content.admin.index', compact('data'));
     }
-
-
 
 
 
@@ -30,14 +29,11 @@ public function create(){
 
 public function store(Request $request){
 
-    $user = User::create([ 
+    $user = Admin::create([ 
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => $request->role,
-        'phone' => $request->phone,
     ]);
-
 
     return redirect()->route('admin.user.index')
     ->with('success', 'Admin created successfully.');
@@ -46,31 +42,30 @@ public function store(Request $request){
 }
 
 
-public function edit(User $user)
+public function edit(Admin $admin)
 {
 
     return view('admin.content.admin.edit',
-     compact('user'));
+     compact('admin'));
 }
 
-public function update(Request $request, User $user){
+public function update(Request $request, Admin $admin){
 
-    $user->update([
+    $admin->update([
         'name' => $request->name,
         'email' => $request->email,
-        'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
-        'phone' => $request->phone,
+        'password' => $request->filled('password') ? Hash::make($request->password) : $admin->password,
     ]);
-    return redirect()->route('admin.user.index')
+    return redirect()->route('admin.admin.index')
     ->with('success', 'Admin updated successfully.');
 }
 
 
-public function destroy(User $user)
+public function destroy(Admin $admin)
 {
 
-        $user->delete();
-        return redirect()->route('admin.user.index')
+        $admin->delete();
+        return redirect()->route('admin.admin.index')
             ->with('success', 'User deleted successfully.');
  
 }

@@ -19,15 +19,15 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('admin.user.update' , $user) }}" method="POST">
+                <form action="{{ route('admin.admin.update' , $admin) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row row-sm">
                         <div class="col-6">
                             <div class="form-group mg-b-0">
                                 <label class="form-label">name: <span class="tx-danger">*</span></label>
-                                <input class="form-control" name="name" placeholder="Enter user name" required=""
-                                    value="{{ old('name', $user->name) }}" type="text" />
+                                <input class="form-control" name="name" placeholder="Enter admin name" required=""
+                                    value="{{ old('name', $admin->name) }}" type="text" />
                                 @error('name')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -36,8 +36,8 @@
                         <div class="col-6">
                             <div class="form-group mg-b-0">
                                 <label class="form-label">email: <span class="tx-danger">*</span></label>
-                                <input class="form-control" name="email" placeholder="Enter user email" required
-                                    value="{{ old('email', $user->email) }}" type="email" />
+                                <input class="form-control" name="email" placeholder="Enter admin email" required
+                                    value="{{ old('email', $admin->email) }}" type="email" />
                                 @error('email')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -48,7 +48,7 @@
                             <div class="form-group mg-b-0">
                                 <label class="form-label">Password: </label>
                                 <div class="input-group">
-                                    <input class="form-control" name="password" placeholder="Enter user password"
+                                    <input class="form-control" name="password" placeholder="Enter admin password"
                                         value="{{ old('password') }}" type="password" id="passwordField" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
@@ -59,19 +59,7 @@
                             </div>
                         </div>
 
-                      
-                        <div class="col-6">
-                            <div class="form-group mg-b-0">
-                                <label class="form-label">Phone: <span class="tx-danger">*</span></label>
-                                <input class="form-control" name="phone" placeholder="Enter user tel" required=""
-                                    value="{{ old('name', $user->phone) }}" type="tel" />
-                                @error('name')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
                      
-
-
 
                         <script>
                             const togglePassword = document.querySelector('#togglePassword');

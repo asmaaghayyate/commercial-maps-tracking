@@ -31,7 +31,7 @@ Route::prefix('admin')->middleware(["auth"])->name('admin.')->group(function(){
     Route::resource('departement' , DepartementController::class);
     Route::resource('command' , CommandController::class);
 
-    Route::resource('user' , AdminController::class);
+    Route::resource('admin' , AdminController::class);
 
 });
 

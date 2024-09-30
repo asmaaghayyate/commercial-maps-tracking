@@ -22,7 +22,7 @@
                 <div class="user-info">
                     <h4 class="font-weight-semibold mt-3 mb-0">{{ Auth::user()->name }}</h4>
                     <span class="mb-0 text-muted">
-                        {{ Auth::user()->role }}
+                        Admin
                     </span>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <li><a class="slide-item" href="{{ route('admin.commercial.index') }}">Commercial</a></li>
                     <li><a class="slide-item" href="{{ route('admin.client.index') }}">Clients</a>
                     </li>
-                    <li><a class="slide-item" href="{{ route('admin.user.index') }}">Admins</a>
+                    <li><a class="slide-item" href="{{ route('admin.admin.index') }}">Admins</a>
                     </li>
                 </ul>
             </li>

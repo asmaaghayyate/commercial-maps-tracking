@@ -16,7 +16,7 @@ class CommandController extends Controller
     public function MyCommands()
     {
         $commands = Command::where('commercial_id', auth()->guard("commercial")->user()->id)
-            ->with(['client'])
+            ->with(['client'])->latest()
             ->paginate(10);
         return response()->json($commands, 200);
     }
@@ -67,7 +67,7 @@ class CommandController extends Controller
     public function listecommandes()
     {
 
-        $commands = Command::whereNull('commercial_id')->with('client')->paginate(10); // Récupérer les commandes avec commercial_id = null
+        $commands = Command::whereNull('commercial_id')->with('client')->latest()->paginate(10); // Récupérer les commandes avec commercial_id = null
         return response()->json($commands, 200);
     }
 }

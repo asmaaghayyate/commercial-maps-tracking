@@ -13,7 +13,7 @@
         </div>
         <div class="d-flex my-xl-auto right-content">
             <div class="pr-1 mb-3 mb-xl-0">
-                <a href="{{ route('admin.user.create') }}" title="Create New admin" type="button"
+                <a href="{{ route('admin.admin.create') }}" title="Create New admin" type="button"
                     class="btn btn-info btn-sm">
                     <i class="fa-solid fa-plus"></i>
                 </a>
@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @php
-                            $columns = ['Name', 'Email', 'Phone', 'Action'];
+                            $columns = ['Name', 'Email','Action'];
                         @endphp
                         <table class="table table-hover mb-0 text-md-nowrap">
                             <thead>
@@ -46,15 +46,14 @@
                                     <tr>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->phone }}</td>
 
 
                                         <td class="d-flex">
-                                            <a href="{{ route('admin.user.edit', $item) }}" class="btn btn-warning btn-sm"
+                                            <a href="{{ route('admin.admin.edit', $item) }}" class="btn btn-warning btn-sm"
                                                 style="margin-right: 5px"><i class="fa-solid fa-pen "></i></a>
 
                                                 <form id="delete-user-form-{{ $item->id }}"
-                                                    action="{{ route('admin.user.destroy', $item->id) }}" method="POST" style="display: none;">
+                                                    action="{{ route('admin.admin.destroy', $item->id) }}" method="POST" style="display: none;">
                                                   @csrf
                                                   @method('DELETE')
                                               </form>
