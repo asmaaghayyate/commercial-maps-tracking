@@ -10,6 +10,7 @@ use App\Models\Command;
 use App\Models\CommandDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommandController extends Controller
 {
@@ -38,12 +39,16 @@ class CommandController extends Controller
             ], 400);
         }
     }
-
+ 
     public function AddLocation(Command $command, Request $request)
     {
+       // $this->authorize('view-command', $command); // Vérifiez que $commande est une instance de Command
 
-       // return $command->id;
-        if (auth()->guard("commercial")->user()->id === $command->commercial_id) {
+       // dd(Gate::allows('addlocation',$command));
+//dd($command->commercial_id."//".auth()->guard("commercial")->user()->id);
+
+        if (Gate::allows('addlocation', $command)) {
+      
             $request->validate([
                 'current_location' => 'required|json',
             ]);
