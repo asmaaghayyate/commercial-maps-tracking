@@ -85,16 +85,21 @@
                                                 <h5 class="font-weight-semibold mb-4">PASSWORD RESET.</h5>
                                                 <p class="semibold mb-4">Enter your email below and we will
                                                     send you a link to reset your password.</p>
-                                                <form action="{{ route('forget.password.post') }}" method="POST">
+													@if (session()->has('success'))
+							<div class="alert alert-success">
+								{{ session()->get('success') }}
+							</div>
+						   @endif
+                                                <form action="{{route('password.email')}}" method="POST">
                                                     @csrf
                                                     @method('POST')
                                                     <div class="form-group">
                                                         <label style="color: black">Email</label> <input
                                                             class="form-control"
                                                             style="border: 1px solid black ; border-bottom-right-radius: 20px;border-top-right-radius: 20px"
-                                                            name="email" placeholder="Enter your email"
+                                                            name="email" id="email" placeholder="Enter your email"
                                                             type="email">
-                                                        @error('email')
+                                                        @error('erreur')
                                                             <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
                                                         <br><br>

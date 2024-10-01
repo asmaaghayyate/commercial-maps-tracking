@@ -76,16 +76,22 @@
                                         <div class="card-sigin">
                                             <div class="main-signup-header">
                                                 <h2>Reset Password!</h2>
-                                                <form action="{{ route('reset.password.post') }}" method="POST">
+
+                                                <form action="{{route('password.update')}}" method="POST">
                                                     @csrf
                                                     @method('POST')
-                                                    <input type="hidden" name="token" value="{{ $token }}">
+                                                    @if (session()->has('success'))
+                                                    <div class="alert alert-success mt-2">
+                                                        {{ session()->get('success') }}
+                                                    </div>
+                                                   @endif
+                                                    <input type="hidden" name="token" value="">
                                                     <div class="form-group">
                                                         <label style="color: black">Email</label> <input
-                                                            class="form-control" value="{{ old('email') }}"
+                                                            class="form-control" 
                                                             style="border: 1px solid black ; border-bottom-right-radius: 20px;border-top-right-radius: 20px"
-                                                            name="email" placeholder="Enter your email"
-                                                            type="email">
+                                                            name="email" 
+                                                            type="email" id="email" value="{{$email}}" readonly>
                                                         @error('email')
                                                             <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror

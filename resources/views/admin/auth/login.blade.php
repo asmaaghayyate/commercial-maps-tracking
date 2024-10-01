@@ -112,7 +112,7 @@
                                                         <button class="btn btn-main-primary btn-block">Sign In</button>
                                                     </div>
                                                 </form>
-                                                <a href="#">forget password</a>
+                                                <a href="{{route('password.request')}}">forget password</a>
                                                 <script>
                                                     const togglePassword = document.querySelector('#togglePassword');
                                                     const passwordField = document.querySelector('#passwordField');

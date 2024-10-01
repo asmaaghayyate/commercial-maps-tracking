@@ -16,9 +16,17 @@ Route::get('/', function () {
 Route::permanentRedirect('/', '/admin');
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('login',  "LoginForm")->name('login')->middleware('guest');
+    Route::get( 'login',  "LoginForm")->name('login')->middleware('guest');
     Route::post('loginf',  "Login")->name('loginf');
     Route::post('logout',  "logout")->name('logout');
+    Route::get( '/password/reset',  "forgetlogin")->name('password.request')->middleware('guest');
+    Route::post('/password/email',  "sendResetLinkEmail")->name('password.email');
+
+    Route::get( 'password/reset/{token}/{email}',  "showResetForm")->name('password.reset')->middleware('guest');
+   
+    Route::post('/password/update',  "passwordupdate")->name('password.update');
+
+  
 });
 
 Route::prefix('admin')->middleware(["auth"])->name('admin.')->group(function(){
