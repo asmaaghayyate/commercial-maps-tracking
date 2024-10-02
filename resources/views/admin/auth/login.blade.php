@@ -18,37 +18,30 @@
     <link rel="icon" href="{{ asset('assets/img/brand/favicon.png') }}" type="image/x-icon" />
 
     <!-- Icons css -->
-    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
 
     <!--  Right-sidemenu css -->
-    <link href="{{ asset('assets/plugins/sidebar/sidebar.css') }}" rel="stylesheet">
 
     <!--  Custom Scroll bar-->
-    <link href="{{ asset('assets/plugins/mscrollbar/jquery.mCustomScrollbar.css') }}" rel="stylesheet" />
 
     <!--  Left-Sidebar css -->
-    <link rel="stylesheet" href="{{ asset('assets/css/sidemenu.css') }}">
 
     <!--- Style css --->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     <!--- Dark-mode css --->
-    <link href="{{ asset('assets/css/style-dark.css') }}" rel="stylesheet">
 
     <!---Skinmodes css-->
-    <link href="{{ asset('assets/css/skin-modes.css') }}" rel="stylesheet" />
 
     <!--- Animations css-->
-    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet">
 
 </head>
 
 <body class="main-body bg-light">
 
     <!-- Loader -->
-    <div id="global-loader">
+    {{-- <div id="global-loader">
         <img src="{{ asset('assets/img/loader.svg') }} " class="loader-img" alt="Loader">
-    </div>
+    </div> --}}
     <!-- /Loader -->
 
     <!-- Page -->
@@ -140,7 +133,7 @@
     <!-- End Page -->
 
     <!-- JQuery min js -->
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Bundle js -->
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -159,7 +152,7 @@
     <script src="{{ asset('assets/plugins/rating/jquery.barrating.js') }}"></script>
 
     <!-- custom js -->
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
 
 </body>
 
