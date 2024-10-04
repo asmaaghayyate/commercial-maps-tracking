@@ -81,7 +81,17 @@ class CommandController extends Controller
         $destinationArray = is_string($command->destination)
             ? json_decode($command->destination, true)
             : $command->destination; // Use directly if it's already an array
-
+    
+            $notification = \Illuminate\Notifications\DatabaseNotification::where('data->id', $command->id)
+            ->whereNull('read_at')
+            ->first();
+        
+        if ($notification) {
+            // Marquer la notification comme lue
+            $notification->markAsRead();
+            // Retourner ou afficher un message de succès si nécessaire
+        } 
+        
         return view('admin.content.command.show', [
             'command' => $command,
             'destinationArray' => $destinationArray,
@@ -115,6 +125,16 @@ class CommandController extends Controller
         if ($command) {
             $command->delete();
         }
+
+        $notification = \Illuminate\Notifications\DatabaseNotification::where('data->id', $command->id)
+        ->whereNull('read_at')
+        ->first();
+     if ($notification) {
+         // Marquer la notification comme lue
+         $notification->markAsRead();
+         // Retourner ou afficher un message de succès si nécessaire
+     } 
+
         return redirect()->route('admin.command.index')
             ->with('success', 'commande deleted successfully.');
     }

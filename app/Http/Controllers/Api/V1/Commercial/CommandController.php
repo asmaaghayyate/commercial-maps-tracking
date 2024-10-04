@@ -9,8 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Command;
 use App\Models\CommandDetail;
 use App\Models\User;
+use App\Notifications\TakeCommande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 
 class CommandController extends Controller
 {
@@ -25,10 +28,18 @@ class CommandController extends Controller
 
     public function TakCommand(Command $command)
     {
+        //$user = auth()->guard("commercial")->user();
+       //dd( $user);
         if (!$command->commercial_id) {
             $command->update([
                 "commercial_id" => auth()->guard("commercial")->user()->id
             ]);
+
+            $user = auth()->guard("commercial")->user();
+ 
+           // $user->notify(new TakeCommande($command));
+     Notification::send($user,new TakeCommande($command));
+
             event(new TakeCommandEvent('command have been taked'));
             return response()->json([
                 "message" => "Commande prise en charge avec succès."
@@ -75,4 +86,21 @@ class CommandController extends Controller
         $commands = Command::whereNull('commercial_id')->with('client')->latest()->paginate(10); // Récupérer les commandes avec commercial_id = null
         return response()->json($commands, 200);
     }
+
+
+    public function readall(Request $request)
+    {
+        // Récupère toutes les notifications non lues dans la base de données
+        $notifications = \Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->get();
+    
+        // Marque toutes les notifications non lues comme lues
+        foreach ($notifications as $notification) {
+            $notification->markAsRead();
+        }
+    
+        return back(); // Redirige vers la page précédente
+    }
+    
+
+
 }

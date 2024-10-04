@@ -26,6 +26,8 @@ Route::prefix('v1')->group(function () {
             Route::post('TakCommand/{command}' , "TakCommand");
             Route::post('AddLocation/{command}' , "AddLocation");
             Route::get('Listecommandes' , "Listecommandes");
+            Route::get('readall' , "readall")->name('readall.commande');
+
 
         });
     });
