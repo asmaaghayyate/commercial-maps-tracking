@@ -6,6 +6,7 @@ use App\Events\Admin\TakCommandeEvent;
 use App\Events\Api\V1\AddLocationEvent;
 use App\Events\Api\V1\TakeCommandEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Command;
 use App\Models\CommandDetail;
 use App\Models\User;
@@ -38,7 +39,11 @@ class CommandController extends Controller
             $user = auth()->guard("commercial")->user();
  
             //$user->notify(new TakeCommande($command));
-     Notification::send($user,new TakeCommande($command));
+            $admins = Admin::all();
+            foreach ($admins as $admin) {
+                # code...
+                Notification::send($admin,new TakeCommande($command));
+            }
 
             event(new TakeCommandEvent('command have been taked'));
             return response()->json([

@@ -116,7 +116,7 @@
                                 </div>
                                 
                              
-                                @foreach (\Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->get() as $item)
+                                @foreach (Auth::user()->notifications()->get()  as $item)
                                    <div class="main-notification-list Notification-scroll">
                                    <a class="d-flex p-3 border-bottom" href="{{ route('admin.command.show', $item->data['id']) }}">
                                        <div class="notifyimg bg-pink">

@@ -55,7 +55,7 @@
                     <tbody>
                          
 
-                        @foreach (\Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->get() as $item)
+             @foreach (Auth::user()->notifications()->get() as $item)
                             <tr>
                                 <td>{{$item->data['commercial']}}</td>
                                
