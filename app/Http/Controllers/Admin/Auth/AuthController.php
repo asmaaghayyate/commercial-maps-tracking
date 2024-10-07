@@ -97,4 +97,10 @@ class AuthController extends Controller
             ->with(['success' => "Votre mot de passe a été bien modifié."]);
     }
 
+public function mesnotifications(){
+    return view('admin.auth.tout_notifications');
+}
+
+
+
 }

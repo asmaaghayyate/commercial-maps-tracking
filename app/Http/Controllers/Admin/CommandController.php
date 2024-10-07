@@ -82,7 +82,7 @@ class CommandController extends Controller
             ? json_decode($command->destination, true)
             : $command->destination; // Use directly if it's already an array
     
-            $notification = \Illuminate\Notifications\DatabaseNotification::where('data->id', $command->id)
+ $notification = \Illuminate\Notifications\DatabaseNotification::where('data->id', $command->id)
             ->whereNull('read_at')
             ->first();
         

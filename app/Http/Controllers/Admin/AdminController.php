@@ -48,6 +48,8 @@ public function store(Request $request){
 }
 
 
+
+
 public function edit(Admin $admin)
 {
 

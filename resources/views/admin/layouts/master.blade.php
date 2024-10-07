@@ -90,7 +90,7 @@
                     </div>
                     <div class="main-header-right">
 
-@if (  \Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->count()!=0  )
+@if ( \Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->count()!=0  )
     
 
                         <div class="dropdown nav-item main-header-notification">
@@ -140,7 +140,9 @@
                                     </a>
                                     </div>
                                  @endforeach
-                       
+                                 <div class="text-center dropdown-footer">
+                                    <a href="{{route('toutnotifications')}}">VOIR TOUT</a>
+                                </div>
                             </div>
                         </div>
 @endif

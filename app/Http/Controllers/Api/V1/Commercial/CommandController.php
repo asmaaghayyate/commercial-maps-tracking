@@ -37,7 +37,7 @@ class CommandController extends Controller
 
             $user = auth()->guard("commercial")->user();
  
-           // $user->notify(new TakeCommande($command));
+            //$user->notify(new TakeCommande($command));
      Notification::send($user,new TakeCommande($command));
 
             event(new TakeCommandEvent('command have been taked'));

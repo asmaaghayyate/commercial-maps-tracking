@@ -25,8 +25,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::get( 'password/reset/{token}/{email}',  "showResetForm")->name('password.reset')->middleware('guest');
    
     Route::post('/password/update',  "passwordupdate")->name('password.update');
-
+    Route::get('/notifications',  "mesnotifications")->name('toutnotifications');
+    
   
+
 });
 
 Route::prefix('admin')->middleware(["auth"])->name('admin.')->group(function(){

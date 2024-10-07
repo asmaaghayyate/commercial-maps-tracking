@@ -61,7 +61,8 @@ return [
     //'data' => $this->details['body']
     'id'=>$this->commande->id,
      'title'=>"une nouvelle commande a été prise par",
-     'commercial'=>auth()->guard("commercial")->user()->name
+     'commercial'=>auth()->guard("commercial")->user()->name,
+     
 ];
     }
 }
