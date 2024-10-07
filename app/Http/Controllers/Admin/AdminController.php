@@ -29,6 +29,9 @@ public function create(){
 
 public function store(Request $request){
 
+
+
+    
     $user = Admin::create([ 
         'name' => $request->name,
         'email' => $request->email,
