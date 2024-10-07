@@ -29,16 +29,20 @@ public function create(){
 
 public function store(Request $request){
 
-
-
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:admins,email', // Assurez-vous de remplacer 'admins' par le nom de votre table
+        'password' => 'required', // 'confirmed' vérifie que 'password_confirmation' est présent et correspond
+    ]);
     
+
     $user = Admin::create([ 
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
     ]);
 
-    return redirect()->route('admin.user.index')
+    return redirect()->route('admin.admin.index')
     ->with('success', 'Admin created successfully.');
 
     
