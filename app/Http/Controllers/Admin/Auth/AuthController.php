@@ -21,7 +21,7 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email|exists:admins,email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:2',
         ]);
 
         $credentials = $request->only('email', 'password');

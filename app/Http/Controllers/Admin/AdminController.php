@@ -20,7 +20,6 @@ class AdminController extends Controller
     }
 
 
-
 public function create(){
 
     return view('admin.content.admin.create');
@@ -32,7 +31,7 @@ public function store(Request $request){
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:admins,email', // Assurez-vous de remplacer 'admins' par le nom de votre table
-        'password' => 'required', // 'confirmed' vérifie que 'password_confirmation' est présent et correspond
+        'password' => 'required|min:2', // 'confirmed' vérifie que 'password_confirmation' est présent et correspond
     ]);
     
 
