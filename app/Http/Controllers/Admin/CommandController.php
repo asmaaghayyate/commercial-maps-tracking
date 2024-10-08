@@ -81,9 +81,12 @@ class CommandController extends Controller
         $destinationArray = is_string($command->destination)
             ? json_decode($command->destination, true)
             : $command->destination; // Use directly if it's already an array
-    
+
+           $admin= Auth::user()->id;
+
  $notification = \Illuminate\Notifications\DatabaseNotification::where('data->id', $command->id)
             ->whereNull('read_at')
+            ->where('notifiable_id', $admin)
             ->first();
         
         if ($notification) {

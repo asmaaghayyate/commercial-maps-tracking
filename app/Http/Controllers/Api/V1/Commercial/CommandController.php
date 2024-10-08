@@ -96,7 +96,13 @@ class CommandController extends Controller
     public function readall(Request $request)
     {
         // Récupère toutes les notifications non lues dans la base de données
-        $notifications = \Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->get();
+        $admin = Auth::user();
+        $notifications = $admin->notifications()
+        ->whereNull('read_at')
+        ->where('notifiable_id', $admin->id)
+        ->get();
+
+       // $notifications = \Illuminate\Notifications\DatabaseNotification::whereNull('read_at')->get();
     
         // Marque toutes les notifications non lues comme lues
         foreach ($notifications as $notification) {
